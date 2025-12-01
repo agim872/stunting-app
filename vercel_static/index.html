@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistem Deteksi Stunting Balita - Skripsi Informatika</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* HEADER */
+        header {
+            background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
+            color: white;
+            padding: 40px 0;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            margin-bottom: 40px;
+        }
+
+        .logo {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            color: #1abc9c;
+        }
+
+        h1 {
+            font-size: 2.8rem;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* MAIN CONTENT */
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 40px;
+            margin-bottom: 60px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.12);
+        }
+
+        .card h2 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #3498db;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .card h2 i {
+            color: #3498db;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-top: 20px;
+        }
+
+        .feature {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 4px solid #1abc9c;
+        }
+
+        .feature h3 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+
+        /* RESULTS SECTION */
+        .results {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 20px;
+        }
+
+        .result-item {
+            text-align: center;
+            padding: 20px;
+            border-radius: 10px;
+            color: white;
+        }
+
+        .accuracy {
+            background: linear-gradient(135deg, #3498db 0%, #2c3e50 100%);
+        }
+
+        .dataset {
+            background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);
+        }
+
+        .models {
+            background: linear-gradient(135deg, #9b59b6 0%, #8e44ad 100%);
+        }
+
+        .result-item i {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+
+        .result-value {
+            font-size: 2.2rem;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+
+        /* GITHUB SECTION */
+        .github-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: #24292e;
+            color: white;
+            padding: 15px 25px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: bold;
+            margin-top: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .github-link:hover {
+            background: #2d333b;
+            transform: scale(1.05);
+        }
+
+        /* DEPLOYMENT STATUS */
+        .status {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 20px;
+            font-weight: bold;
+        }
+
+        .status-success {
+            background: #d4edda;
+            color: #155724;
+            border-left: 4px solid #28a745;
+        }
+
+        .status-warning {
+            background: #fff3cd;
+            color: #856404;
+            border-left: 4px solid #ffc107;
+        }
+
+        /* FOOTER */
+        footer {
+            background: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 30px 0;
+            margin-top: 60px;
+        }
+
+        .thesis-info {
+            background: #e8f4fc;
+            border-left: 4px solid #3498db;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            h1 { font-size: 2rem; }
+            .subtitle { font-size: 1rem; }
+            .card { padding: 20px; }
+            .feature-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">
+                <i class="fas fa-baby"></i>
+            </div>
+            <h1>SISTEM DETEKSI STUNTING BALITA</h1>
+            <p class="subtitle">
+                Implementasi Machine Learning dengan Algoritma KNN dan Random Forest untuk Klasifikasi Stunting pada Balita
+            </p>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="main-content">
+            <!-- ABOUT THE SYSTEM -->
+            <section class="card">
+                <h2><i class="fas fa-info-circle"></i> Tentang Sistem</h2>
+                <p>Sistem ini dikembangkan sebagai bagian dari skripsi sarjana Informatika yang mengimplementasikan dua algoritma machine learning (KNN dan Random Forest) untuk mendeteksi stunting pada balita berdasarkan parameter antropometri.</p>
+                
+                <div class="thesis-info">
+                    <h3>📚 Informasi Skripsi</h3>
+                    <p><strong>Judul:</strong> KLASIFIKASI DETEKSI STUNTING PADA BALITA MENGGUNAKAN KNN DAN RANDOM FOREST</p>
+                    <p><strong>Teknologi:</strong> Python, Streamlit, Scikit-learn, Pandas, Vercel</p>
+                    <p><strong>Dataset:</strong> 300 data sintetik dengan 10 fitur prediktor</p>
+                </div>
+            </section>
+
+            <!-- SYSTEM FEATURES -->
+            <section class="card">
+                <h2><i class="fas fa-star"></i> Fitur Sistem</h2>
+                <div class="feature-grid">
+                    <div class="feature">
+                        <h3><i class="fas fa-cogs"></i> Machine Learning</h3>
+                        <p>Implementasi KNN dan Random Forest dengan hyperparameter tuning untuk akurasi optimal.</p>
+                    </div>
+                    <div class="feature">
+                        <h3><i class="fas fa-chart-line"></i> Analisis Data</h3>
+                        <p>Visualisasi data lengkap dengan feature importance analysis dan confusion matrix.</p>
+                    </div>
+                    <div class="feature">
+                        <h3><i class="fas fa-mobile-alt"></i> Web Interface</h3>
+                        <p>Aplikasi web responsif dengan input form interaktif dan prediksi real-time.</p>
+                    </div>
+                    <div class="feature">
+                        <h3><i class="fas fa-file-export"></i> Export Data</h3>
+                        <p>Fitur export hasil prediksi dalam format CSV untuk dokumentasi medis.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- RESULTS AND ANALYSIS -->
+            <section class="card">
+                <h2><i class="fas fa-chart-bar"></i> Hasil Analisis Model</h2>
+                <div class="results">
+                    <div class="result-item accuracy">
+                        <i class="fas fa-trophy"></i>
+                        <h3>Akurasi Tertinggi</h3>
+                        <div class="result-value">91.11%</div>
+                        <p>Random Forest Classifier</p>
+                    </div>
+                    
+                    <div class="result-item dataset">
+                        <i class="fas fa-database"></i>
+                        <h3>Dataset</h3>
+                        <div class="result-value">300 Data</div>
+                        <p>10 fitur prediktor, 3 kelas target</p>
+                    </div>
+                    
+                    <div class="result-item models">
+                        <i class="fas fa-robot"></i>
+                        <h3>Model Terlatih</h3>
+                        <div class="result-value">2 Model</div>
+                        <p>KNN & Random Forest</p>
+                    </div>
+                </div>
+
+                <h3 style="margin-top: 30px;">📊 Perbandingan Performa Model</h3>
+                <div style="overflow-x: auto; margin-top: 15px;">
+                    <table style="width: 100%; border-collapse: collapse;">
+                        <thead>
+                            <tr style="background: #2c3e50; color: white;">
+                                <th style="padding: 12px; text-align: left;">Metrik</th>
+                                <th style="padding: 12px; text-align: center;">KNN</th>
+                                <th style="padding: 12px; text-align: center;">Random Forest</th>
+                                <th style="padding: 12px; text-align: center;">Pemenang</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr style="background: #f8f9fa;">
+                                <td style="padding: 12px; border-bottom: 1px solid #ddd;">Accuracy</td>
+                                <td style="padding: 12px; text-align: center; border-bottom: 1px solid #ddd;">86.67%</td>
+                                <td style="padding: 12px; text-align: center; border-bottom: 1px solid #ddd;">91.11%</td>
+                                <td style="padding: 12px; text-align: center; border-bottom: 1px solid #ddd; color: #27ae60; font-weight: bold;">Random Forest</td>
+                            </tr>
+                            <tr style="background: white;">
+                                <td style="padding: 12px; border-bottom: 1px solid #ddd;">Precision</td>
+                                <td style="padding: 12px; text-align: center; border-bottom: 1px solid #ddd;">0.87</td>
+                                <td style="padding: 12px; text-align: center; border-bottom: 1px solid #ddd;">0.91</td>
+                                <td style="padding: 12px; text-align: center; border-bottom: 1px solid #ddd; color: #27ae60; font-weight: bold;">Random Forest</td>
+                            </tr>
+                            <tr style="background: #f8f9fa;">
+                                <td style="padding: 12px;">Recall</td>
+                                <td style="padding: 12px; text-align: center;">0.87</td>
+                                <td style="padding: 12px; text-align: center;">0.91</td>
+                                <td style="padding: 12px; text-align: center; color: #27ae60; font-weight: bold;">Random Forest</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- DEPLOYMENT STATUS -->
+            <section class="card">
+                <h2><i class="fas fa-rocket"></i> Status Deployment</h2>
+                
+                <div class="status status-success">
+                    <i class="fas fa-check-circle"></i>
+                    <div>
+                        <h3>✅ GitHub Repository</h3>
+                        <p>Source code lengkap tersedia di GitHub</p>
+                        <a href="https://github.com/agim872/stunting-app" class="github-link" target="_blank">
+                            <i class="fab fa-github"></i>
+                            agim872/stunting-app
+                        </a>
+                    </div>
+                </div>
+
+                <div class="status status-success">
+                    <i class="fas fa-check-circle"></i>
+                    <div>
+                        <h3>✅ Static Site Deployed</h3>
+                        <p>Situs dokumentasi berhasil di-deploy di Vercel</p>
+                        <p><strong>URL:</strong> https://stunting-app.vercel.app</p>
+                    </div>
+                </div>
+
+                <div class="status status-warning">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <div>
+                        <h3>⚠️ Deployment Challenge</h3>
+                        <p>Aplikasi Streamlit asli mengalami kendala kompatibilitas Python 3.12 di Vercel.</p>
+                        <p><strong>Solusi:</strong> Deployed sebagai static site dengan dokumentasi lengkap.</p>
+                    </div>
+                </div>
+
+                <h3 style="margin-top: 30px;">📱 Demo Aplikasi Lokal</h3>
+                <p>Untuk menjalankan aplikasi Streamlit lengkap secara lokal:</p>
+                <pre style="background: #2c3e50; color: white; padding: 15px; border-radius: 8px; overflow-x: auto;">
+# Clone repository
+git clone https://github.com/agim872/stunting-app.git
+
+# Install dependencies
+pip install -r requirements.txt
+
+# Run aplikasi
+streamlit run app.py</pre>
+            </section>
+
+            <!-- FEATURE IMPORTANCE -->
+            <section class="card">
+                <h2><i class="fas fa-chart-pie"></i> Feature Importance Analysis</h2>
+                <p>Analisis menunjukkan faktor paling berpengaruh dalam prediksi stunting:</p>
+                <ol style="margin-left: 20px; margin-top: 15px; line-height: 2;">
+                    <li><strong>Tinggi Badan</strong> (28.7%) - Parameter antropometri utama</li>
+                    <li><strong>Berat Badan</strong> (18.5%) - Indikator nutrisi</li>
+                    <li><strong>Usia Bulan</strong> (14.2%) - Faktor perkembangan</li>
+                    <li><strong>Lingkar Lengan</strong> (11.8%) - Indikator massa otot</li>
+                    <li><strong>Lingkar Kepala</strong> (9.5%) - Indikator perkembangan otak</li>
+                </ol>
+                <p style="margin-top: 15px; font-style: italic;">
+                    Hasil ini sesuai dengan standar WHO yang menekankan tinggi badan sebagai parameter utama stunting.
+                </p>
+            </section>
+
+            <!-- CONCLUSION -->
+            <section class="card">
+                <h2><i class="fas fa-graduation-cap"></i> Kesimpulan Penelitian</h2>
+                <p><strong>🏆 Hasil Utama:</strong> Random Forest menunjukkan performa superior dibanding KNN dengan akurasi 91.11% vs 86.67%.</p>
+                <p><strong>🔍 Temuan Kunci:</strong></p>
+                <ul style="margin-left: 20px; margin-top: 10px;">
+                    <li>Faktor antropometri (tinggi/berat badan) paling signifikan</li>
+                    <li>Sistem dapat dijadikan alat skrining awal di posyandu</li>
+                    <li>Aplikasi web memudahkan penggunaan oleh tenaga kesehatan</li>
+                </ul>
+                <p style="margin-top: 15px;"><strong>🎯 Kontribusi:</strong> Penelitian ini memberikan implementasi praktis machine learning untuk deteksi stunting yang dapat diakses melalui web interface.</p>
+            </section>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>© 2024 - Sistem Deteksi Stunting Balita - Skripsi Sarjana Informatika</p>
+            <p>Dibangun dengan Python, Streamlit, dan Machine Learning</p>
+            <p style="margin-top: 15px; opacity: 0.8;">
+                <i class="fas fa-envelope"></i> Kontak: agim872@student.example.ac.id |
+                <i class="fas fa-university"></i> Universitas Contoh
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // Animasi sederhana untuk result items
+        document.addEventListener('DOMContentLoaded', function() {
+            const resultItems = document.querySelectorAll('.result-item');
+            
+            resultItems.forEach((item, index) => {
+                item.style.opacity = '0';
+                item.style.transform = 'translateY(20px)';
+                
+                setTimeout(() => {
+                    item.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+                    item.style.opacity = '1';
+                    item.style.transform = 'translateY(0)';
+                }, 300 + (index * 200));
+            });
+            
+            // Update tahun dinamis
+            document.querySelector('footer p').innerHTML = 
+                document.querySelector('footer p').innerHTML.replace('2024', new Date().getFullYear());
+        });
+    </script>
+</body>
+</html>
